@@ -1,0 +1,177 @@
+<!--Fiona Wang, Web Dev Period 7+8 Section 85, Dec 21, Level 4 - Grocery List-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery List</title>
+    <script>
+        const items = [];
+
+        function initialize() {
+            list = document.getElementById("list");
+        }
+
+        function addToList() {
+            addOrNot = true;
+            for (let i = 0; i < items.length; i++){
+                if (items[i] === document.getElementById("textt").value){
+                    addOrNot = false;
+                }
+            }
+            if (!addOrNot){
+                alert("You already have " + document.getElementById("textt").value + " on your list.");
+            } else {
+                items.push(document.getElementById("textt").value);
+            }
+            display();
+        }
+
+        function display() {
+            console.log(items);
+            if (items.length === 0) {
+                list.innerHTML = "The list will be placed here.";
+            } else {
+                list.innerHTML = "1. " + items[0] + "<br />";
+                for (let i = 1; i < items.length; i++) {
+                    list.innerHTML += (i + 1 + ". " + items[i] + "<br />");
+                }
+            }
+        }
+
+        lastNum = -1;
+        count = 2;
+        function moveUp() {
+            if (lastNum === parseInt(document.getElementById("numMove").value) - 1) {
+                index = parseInt(document.getElementById("numMove").value) - count;
+                count++;
+            } else {
+                index = parseInt(document.getElementById("numMove").value) - 1;
+                count = 2;
+            }
+            temp = items[index - 1];
+            if (temp) {
+                items[index - 1] = items[index];
+                items[index] = temp;
+                lastNum = parseInt(document.getElementById("numMove").value) - 1;
+            } else {
+                alert("You can't move " + items[index] + " further up.");
+            }
+            display();
+        }
+
+        lastNum2 = -1;
+        count2 = 0;
+        function moveDown() {
+            console.log("works");
+            if (lastNum2 === parseInt(document.getElementById("numMove").value) - 1) {
+                index = parseInt(document.getElementById("numMove").value) + count2;
+                count2++;
+            } else {
+                index = parseInt(document.getElementById("numMove").value) - 1;
+                count2 = 0;
+            }
+            temp = items[index + 1];
+            console.log(temp);
+            if (temp) {
+                items[index + 1] = items[index];
+                items[index] = temp;
+                lastNum2 = parseInt(document.getElementById("numMove").value) - 1;
+            } else {
+                alert("You can't move " + items[index] + " further down.");
+            }
+            display();
+        }
+
+        function deleteItem() {
+            items.splice(parseInt(document.getElementById("delete").value) - 1, 1);
+            display();
+            console.log(items);
+        }
+    </script>
+    <style>
+        * {
+            background-color: #DDCEFF;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        img {
+            width: 200px;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            margin-left: 18px;
+        }
+
+        h1 {
+            padding-top: 15px;
+        }
+
+        #picTitle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 45px;
+            margin-top: 40px;
+        }
+
+        h3,
+        input,
+        button {
+            text-align: center;
+        }
+
+        input,
+        button {
+            background-color: rgb(243, 241, 241);
+        }
+
+        #flex {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+        }
+
+        #child {
+            margin: -6px 7px 20px 7px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="picTitle">
+        <img src="imgs/logo.png">
+        <h1>Grocery List</h1>
+    </div>
+
+    <p id="list">The list will be placed here.</p>
+
+    <h3>What would you like to add?</h3>
+    <div id="flex">
+        <div id="child"><input type="text" id="textt" placeholder="Enter Item"></div>
+        <div id="child"><button onclick="addToList();">Add Item</button></div>
+    </div>
+
+    <h3>Enter the item number that you'll like to move:</h3>
+    <div id="flex">
+        <div id="child"><input type="text" id="numMove" placeholder="Enter Number"></div>
+        <div id="child"><button onclick="moveUp();">Move Up</button></div>
+        <div id="child"><button onclick="moveDown();">Move Down</button></div>
+    </div>
+
+    <h3>Enter the item number that you'll like to remove:</h3>
+    <div id="flex">
+        <div id="child"><input type="text" id="delete" placeholder="Enter Number"></div>
+        <div id="child"><button onclick="deleteItem();">Remove Item</button></div>
+    </div>
+</body>
+</html>
